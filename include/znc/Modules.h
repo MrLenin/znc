@@ -1298,6 +1298,15 @@ class CModule {
      */
     virtual void OnClientCapRequest(CClient* pClient, const CString& sCap,
                                     bool bState);
+    virtual EModRet OnSaslServerChallenge(CClient* pClient, CString& sResponse);
+    virtual EModRet OnClientSaslAuthenticate(CClient* pClient,
+                                             const CString& sMechanism,
+                                             const CString& sBuffer,
+                                             CString& sUser,
+                                             CString& sPass,
+                                             CString& sMechanismResponse,
+                                             bool bSuccess);
+    virtual void OnGetSaslMechanisms(CClient* pClient, SCString& ssMechanisms);
 
     /** Called when a module is going to be loaded.
      *  @param sModName name of the module.
@@ -1574,6 +1583,16 @@ class CModules : public std::vector<CModule*> {
     bool IsClientCapSupported(CClient* pClient, const CString& sCap,
                               bool bState);
     bool OnClientCapRequest(CClient* pClient, const CString& sCap, bool bState);
+    bool OnSaslServerChallenge(CClient* pClient, CString& sResponse);
+    bool OnClientSaslAuthenticate(CClient* pClient,
+                                  const CString& sMechanism,
+                                  const CString& sBuffer,
+                                  CString& sUser,
+                                  CString& sPass,
+                                  CString& sResponse,
+                                  bool bState);
+    bool OnGetSaslMechanisms(CClient* pClient, SCString& ssMechanisms);
+
     bool OnModuleLoading(const CString& sModName, const CString& sArgs,
                          CModInfo::EModuleType eType, bool& bSuccess,
                          CString& sRetMsg);
